@@ -161,7 +161,7 @@ uis.directive('uiSelect',
         });
 
         //Automatically gets focus when loaded
-        if (angular.isDefined(attrs.autofocus)){
+        if (angular.isDefined(attrs.autofocus) && $parse(attrs.autofocus)()) {
           $timeout(function(){
             $select.setFocus();
           });
