@@ -214,6 +214,9 @@ describe('ui-select tests', function () {
       if (attrs.removeSelected !== undefined) {
         attrsHtml += ' remove-selected="' + attrs.removeSelected + '"';
       }
+	  if (attrs.autofocus !== undefined) {
+        attrsHtml += ' autofocus="' + attrs.autofocus + '"';
+      }
     }
 
     return compileTemplate(
@@ -3529,4 +3532,34 @@ describe('ui-select tests', function () {
       });
     });
   });
+
+  describe('autofocus options', function(){
+    it('should call setFocus when autofocus is true', function () {
+      var el = createUiSelect({autofocus: true});
+      spyOn(el.scope().$select, 'setFocus');
+
+      scope.$digest();
+      $timeout.flush();
+      expect(el.scope().$select.setFocus).toHaveBeenCalled();
+    });
+    
+    it('should not call setFocus when autofocus is false', function () {
+      var el = createUiSelect({autofocus: false});
+      spyOn(el.scope().$select, 'setFocus');
+
+      scope.$digest();
+      $timeout.flush();
+      expect(el.scope().$select.setFocus).not.toHaveBeenCalled();
+    });
+    
+    it('should not call setFocus when autofocus is ""', function () {
+      var el = createUiSelect({autofocus: ''});
+      spyOn(el.scope().$select, 'setFocus');
+
+      scope.$digest();
+      $timeout.flush();
+      expect(el.scope().$select.setFocus).not.toHaveBeenCalled();
+    });
+  });
+  
 });
